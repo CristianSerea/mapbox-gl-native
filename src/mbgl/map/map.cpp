@@ -59,7 +59,7 @@ public:
          GLContextMode,
          ConstrainMode,
          ViewportMode,
-         std::string programCacheDir);
+         optional<std::string> programCacheDir);
 
     void onSourceChanged(style::Source&) override;
     void onUpdate(Update) override;
@@ -84,7 +84,7 @@ public:
     const MapMode mode;
     const GLContextMode contextMode;
     const float pixelRatio;
-    const std::string programCacheDir;
+    const optional<std::string> programCacheDir;
 
     MapDebugOptions debugOptions { MapDebugOptions::NoDebug };
 
@@ -117,7 +117,7 @@ Map::Map(Backend& backend,
          GLContextMode contextMode,
          ConstrainMode constrainMode,
          ViewportMode viewportMode,
-         const std::string& programCacheDir)
+         const optional<std::string>& programCacheDir)
     : impl(std::make_unique<Impl>(*this,
                                   backend,
                                   pixelRatio,
@@ -140,7 +140,7 @@ Map::Impl::Impl(Map& map_,
                 GLContextMode contextMode_,
                 ConstrainMode constrainMode_,
                 ViewportMode viewportMode_,
-                std::string programCacheDir_)
+                optional<std::string> programCacheDir_)
     : map(map_),
       observer(backend_),
       backend(backend_),
