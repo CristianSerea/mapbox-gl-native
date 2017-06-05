@@ -324,6 +324,7 @@ public:
     }
 
     UniformValues uniformValues(float currentZoom) const {
+        (void)currentZoom; // Workaround for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56958
         return UniformValues {
             uniformValue<Ps>(currentZoom)...
         };
