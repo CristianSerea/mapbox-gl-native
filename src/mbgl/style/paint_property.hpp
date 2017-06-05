@@ -36,6 +36,12 @@ public:
     using Attribute = A;
 };
 
+template <class T, class A>
+class DataDrivenFlooredPaintProperty : public DataDrivenPaintProperty<T, A> {
+public:
+    using EvaluatorType = DataDrivenFlooredPropertyEvaluator<T>;
+};
+
 template <class T>
 class CrossFadedPaintProperty {
 public:

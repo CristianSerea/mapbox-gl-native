@@ -80,7 +80,9 @@ global.layoutPropertyType = function (property) {
 };
 
 global.paintPropertyType = function (property, type) {
-  if (isDataDriven(property)) {
+  if (property.name === 'line-floorwidth') {
+    return `DataDrivenFlooredPaintProperty<${evaluatedType(property)}, ${attributeType(property, type)}>`;
+  } else if (isDataDriven(property)) {
     return `DataDrivenPaintProperty<${evaluatedType(property)}, ${attributeType(property, type)}>`;
   } else if (/-pattern$/.test(property.name) || property.name === 'line-dasharray') {
     return `CrossFadedPaintProperty<${evaluatedType(property)}>`;
@@ -159,6 +161,11 @@ const layers = Object.keys(spec.layer.type.values).map((type) => {
   const paintProperties = Object.keys(spec[`paint_${type}`]).reduce((memo, name) => {
     spec[`paint_${type}`][name].name = name;
     memo.push(spec[`paint_${type}`][name]);
+    if (name === 'line-width') {
+      spec[`paint_${type}`]['line-floorwidth'] = Object.assign({}, spec[`paint_${type}`][name]);
+      spec[`paint_${type}`]['line-floorwidth'].name = 'line-floorwidth';
+      memo.push(spec[`paint_${type}`]['line-floorwidth']);
+    }
     return memo;
   }, []);
 

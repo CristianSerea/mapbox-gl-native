@@ -80,11 +80,17 @@ public:
     void setLineTranslateAnchorTransition(const TransitionOptions&);
     TransitionOptions getLineTranslateAnchorTransition() const;
 
-    static PropertyValue<float> getDefaultLineWidth();
-    PropertyValue<float> getLineWidth() const;
-    void setLineWidth(PropertyValue<float>);
+    static DataDrivenPropertyValue<float> getDefaultLineWidth();
+    DataDrivenPropertyValue<float> getLineWidth() const;
+    void setLineWidth(DataDrivenPropertyValue<float>);
     void setLineWidthTransition(const TransitionOptions&);
     TransitionOptions getLineWidthTransition() const;
+
+    static DataDrivenPropertyValue<float> getDefaultLineFloorwidth();
+    DataDrivenPropertyValue<float> getLineFloorwidth() const;
+    void setLineFloorwidth(DataDrivenPropertyValue<float>);
+    void setLineFloorwidthTransition(const TransitionOptions&);
+    TransitionOptions getLineFloorwidthTransition() const;
 
     static DataDrivenPropertyValue<float> getDefaultLineGapWidth();
     DataDrivenPropertyValue<float> getLineGapWidth() const;

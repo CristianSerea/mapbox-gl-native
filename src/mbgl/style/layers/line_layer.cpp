@@ -275,21 +275,26 @@ TransitionOptions LineLayer::getLineTranslateAnchorTransition() const {
     return impl().paint.template get<LineTranslateAnchor>().options;
 }
 
-PropertyValue<float> LineLayer::getDefaultLineWidth() {
+DataDrivenPropertyValue<float> LineLayer::getDefaultLineWidth() {
     return { 1 };
 }
 
-PropertyValue<float> LineLayer::getLineWidth() const {
+DataDrivenPropertyValue<float> LineLayer::getLineWidth() const {
     return impl().paint.template get<LineWidth>().value;
 }
 
-void LineLayer::setLineWidth(PropertyValue<float> value) {
+void LineLayer::setLineWidth(DataDrivenPropertyValue<float> value) {
     if (value == getLineWidth())
         return;
     auto impl_ = mutableImpl();
     impl_->paint.template get<LineWidth>().value = value;
+    impl_->paint.template get<LineFloorwidth>().value = value;
     baseImpl = std::move(impl_);
-    observer->onLayerPaintPropertyChanged(*this);
+    if (value.isDataDriven()) {
+        observer->onLayerDataDrivenPaintPropertyChanged(*this);
+    } else {
+        observer->onLayerPaintPropertyChanged(*this);
+    }
 }
 
 void LineLayer::setLineWidthTransition(const TransitionOptions& options) {
@@ -300,6 +305,37 @@ void LineLayer::setLineWidthTransition(const TransitionOptions& options) {
 
 TransitionOptions LineLayer::getLineWidthTransition() const {
     return impl().paint.template get<LineWidth>().options;
+}
+
+DataDrivenPropertyValue<float> LineLayer::getDefaultLineFloorwidth() {
+    return { 1 };
+}
+
+DataDrivenPropertyValue<float> LineLayer::getLineFloorwidth() const {
+    return impl().paint.template get<LineFloorwidth>().value;
+}
+
+void LineLayer::setLineFloorwidth(DataDrivenPropertyValue<float> value) {
+    if (value == getLineFloorwidth())
+        return;
+    auto impl_ = mutableImpl();
+    impl_->paint.template get<LineFloorwidth>().value = value;
+    baseImpl = std::move(impl_);
+    if (value.isDataDriven()) {
+        observer->onLayerDataDrivenPaintPropertyChanged(*this);
+    } else {
+        observer->onLayerPaintPropertyChanged(*this);
+    }
+}
+
+void LineLayer::setLineFloorwidthTransition(const TransitionOptions& options) {
+    auto impl_ = mutableImpl();
+    impl_->paint.template get<LineFloorwidth>().options = options;
+    baseImpl = std::move(impl_);
+}
+
+TransitionOptions LineLayer::getLineFloorwidthTransition() const {
+    return impl().paint.template get<LineFloorwidth>().options;
 }
 
 DataDrivenPropertyValue<float> LineLayer::getDefaultLineGapWidth() {
